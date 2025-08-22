@@ -25,15 +25,16 @@ const CartItem = ({ onContinueShopping }) => {
     }
 
     const handleIncrement = (item) => {
-        item.quantity++;
-        dispatch(updateQuantity({item: item.name, quantity: item.quantity}));
+        const existedItem = cart.find(plant => plant.name === item.name);
+        dispatch(updateQuantity({name: existedItem.name, quantity: existedItem.quantity + 1}));
     };
 
     const handleDecrement = (item) => {
-        if (item.quantity > 1) {
-            dispatch(updateQuantity({item: item.name, quantity: --item.quantity}))
-        } else if (item.quantity <= 1) {
-            dispatch(removeItem(item.name));
+        const existedItem = cart.find(plant => plant.name === item.name)
+        if (existedItem.quantity > 1) {
+            dispatch(updateQuantity({name: existedItem.name, quantity: existedItem.quantity - 1}));
+        } else if (existedItem.quantity <= 1) {
+            dispatch(removeItem(existedItem.name));
         }
     };
 
